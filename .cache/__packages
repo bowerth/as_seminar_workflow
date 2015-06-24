@@ -1,0 +1,14 @@
+base
+datasets
+devtools
+graphics
+grDevices
+httr
+methods
+RODBC
+screening
+slidify
+slidifyLibraries
+stan
+stats
+utils

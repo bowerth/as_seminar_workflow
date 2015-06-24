@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing and analysis with R at OECD</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Data processing and analysis with R at OECD">
+  <meta name="author" content="Bo Werth">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/nvd3/css/nv.d3.css"></link>
+<link rel=stylesheet href="libraries/widgets/nvd3/css/rNVD3.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  <script src="libraries/widgets/highcharts/js/jquery-1.9.1.min.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts-more.js"></script>
+<script src="libraries/widgets/highcharts/js/exporting.js"></script>
+<script src="libraries/widgets/nvd3/js/jquery-1.8.2.min.js"></script>
+<script src="libraries/widgets/nvd3/js/d3.v3.min.js"></script>
+<script src="libraries/widgets/nvd3/js/nv.d3.min-new.js"></script>
+<script src="libraries/widgets/nvd3/js/fisheye.js"></script>
+
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Data processing and analysis with R at OECD</h1>
+    <h2>Scope for A/S Open Source Software in an International Organisation</h2>
+    <p>Bo Werth<br/>Statistician OECD STI/EAS</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Disclaimer</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The information contained in this presentation has not been reviewed by the Organisation and do not necessarily represent the official views of the Organisation or of the governments of its member countries.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>About OECD</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>&quot;Conventional Wisdom Central&quot; <a href="http://krugman.blogs.nytimes.com/2010/09/10/oops-at-the-oecd/">krugman.blogs.nytimes.com</a></li>
+<li>evidence-based reports for policy recommendation</li>
+<li>exchange platform for government officials</li>
+<li>directorates covering different aspects of the economy
+
+<ul>
+<li>education, employment, international trade, tax regulations, environment, financial sector, science and technology...</li>
+</ul></li>
+<li>expert group meetings take place twice per year</li>
+<li>considerable overall budget</li>
+<li>allocated to deliverables every 2 years</li>
+<li>relatively small IT budget (6-7%)</li>
+</ul>
+
+<p style="text-align:right"><a href="http://www.oecd.org"><img src="assets/img/logooecd_en.png" alt="OECD logo"/></a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The six principals of open science</h2>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center"><img src="assets/img/Open_Science_-_Prinzipien.png" alt="Open Science Principles"/></p>
+
+<p>Source: <a href="http://en.wikipedia.org/wiki/Open_science">Wikipedia</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Rogoff and Reinhart: Growth in a Time of Debt</h2>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:left"><img src="assets/img/rogoffreinhart_460x276.jpg" alt="Rogoff Reinhart"/></p>
+
+<p>When a country’s debt-to-GDP level gets above 90%, real GDP growth takes a big hit</p>
+
+<p><a href="http://www.businessweek.com/articles/2013-04-18/faq-reinhart-rogoff-and-the-excel-error-that-changed-history">Businessweek</a>: FAQ: Reinhart, Rogoff, and the Excel Error That Changed History</p>
+
+<p><a href="http://www.theatlantic.com/business/archive/2013/04/forget-excel-this-was-reinhart-and-rogoffs-biggest-mistake/275088/">The Atlantic</a>: Forget Excel: This Was Reinhart and Rogoff&#39;s Biggest Mistake</p>
+
+<p>Carmen M. Reinhart &amp; Kenneth S. Rogoff, 2010. &quot;Growth in a Time of Debt,&quot; American Economic Review, American Economic Association, vol. 100(2), pages 573-78, May.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>Herndon, Ash, and Pollin</h3>
+  </hgroup>
+  <article data-timings="">
+    <p>They replicate R&amp;R&#39;s original work and make various corrections to a) methods and data choices and b) a &quot;spreadsheet error,&quot; the latter where R&amp;R appear to have left out some important data that has a big impact on their results.</p>
+
+<p style="text-align:left"><img src="assets/img/R_Rcorrect.png" alt="Real GDP growth rates"/></p>
+
+<p>Source: <a href="http://jaredbernsteinblog.com/not-to-pile-on-but-correcting-reinhart-and-rogoff/">http://jaredbernsteinblog.com/not-to-pile-on-but-correcting-reinhart-and-rogoff/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Peer-review: Mail Avengers</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A paper that largely consists of the words &quot;Get me off your *** mailing list&quot; repeated 863 times was accepted by a journal that claims to be peer reviewed.</p>
+
+<p style="text-align:center"><img src="assets/img/Screen_Shot_2014-11-21_at_10.19.51_AM.0.0.png" alt="Mailing List"/></p>
+
+<p>Source: <a href="http://www.scs.stanford.edu/%7Edm/home/papers/remove.pdf">http://www.scs.stanford.edu/~dm/home/papers/remove.pdf</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>Mail Avengers: Figure 1</h3>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center"><img src="assets/img/Screen_Shot_2014-11-21_at_9.53.24_AM.0.png" alt="Mailing List Fig1"/></p>
+
+<p>Source: <a href="http://www.scs.stanford.edu/%7Edm/home/papers/remove.pdf">http://www.scs.stanford.edu/~dm/home/papers/remove.pdf</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>Mail Avengers: Figure 2</h3>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center"><img src="assets/img/Screen_Shot_2014-11-21_at_9.53.39_AM.0.png" alt="Mailing List Fig2" height="500px"/></p>
+
+<p>Source: <a href="http://www.scs.stanford.edu/%7Edm/home/papers/remove.pdf">http://www.scs.stanford.edu/~dm/home/papers/remove.pdf</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>OECD Data Portal</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Increase free accessibility to OECD&#39;s publications and data, while increasing dissemination and maintaining a sustainable and effective publishing operation</p>
+
+<p style="text-align:left"><img src="assets/img/oecd_data_portal.jpg" alt="OECD Data Portal" height="400px"/></p>
+
+<p><a href="http://data.oecd.org/">http://data.oecd.org/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>OECD Open Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>OpenDataAPI <a href="http://stats.oecd.org/opendataapi/">http://stats.oecd.org/opendataapi/</a></p>
+
+<p style="text-align:left"><img src="assets/img/oecd_odata.png" alt="ODATA"/></p>
+
+<p>Statistical Data and Metadata eXchange (SDMX)</p>
+
+<p style="text-align:left"><img src="assets/img/oecd_JSON.png" alt="SDMX-JSON"/></p>
+
+<p style="text-align:left"><img src="assets/img/sdmx_logo.png" alt="SDMX logo"/></p>
+
+<p>Information about practical implementations: <a href="http://sdmx.org/?page_id=14">http://sdmx.org/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Publication Workflow</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p>Statisticians</p>
+
+<ul>
+<li>identifying and harmonising data</li>
+<li>graphics for analysis and publication</li>
+</ul>
+
+<p>Analysts</p>
+
+<ul>
+<li>narrative for draft report</li>
+</ul>
+
+<p>Senior Analysts</p>
+
+<ul>
+<li>editing for final report</li>
+</ul>
+
+<p>Publishing and communications</p>
+
+<ul>
+<li>publishing on <a href="http://www.oecd-ilibrary.org/">OECD iLibrary</a></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p style="text-align:center"><img src="assets/img/excel_logo.png" alt="Excel Logo" height="100px"/></p>
+
+<p style="text-align:center"><img src="assets/img/stata_logo.png" alt="STATA Logo" height="60px"/></p>
+
+<p style="text-align:center"><img src="assets/img/word_logo.png" alt="Word Logo" height="100px"/></p>
+
+<p style="text-align:center"><img src="assets/img/pdf_logo.jpg" alt="PDF Logo" height="100px"/></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Licensed A/S Software</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="http://www.eviews.com/">EViews</a>: time-series oriented econometric analysis</li>
+<li><a href="http://fame.sungard.com">FAME</a>: Forecasting Analysis and Modeling Environment</li>
+<li><a href="http://www.gams.com/">GAMS</a>: high-level modeling system for mathematical programming and optimization</li>
+<li><a href="http://www.mathworks.com/products/matlab/">MATLAB</a>: numerical computing environment for matrix manipulations</li>
+<li><a href="http://www.prognoz.com/">Prognoz</a>: BI, analytics and visual discovery solutions</li>
+<li><a href="http://www.sas.com/">SAS</a>: Business Analytics and Business Intelligence Software</li>
+<li><a href="http://www.stata.com/">Stata</a>: Data Analysis and Statistical Software</li>
+<li><a href="www.tableausoftware.com/">Tableau</a>: Business Intelligence and Analytics</li>
+<li><a href="http://www.hendyplan.com/troll-software/">TROLL</a>: integrated software system for econometric modelling and statistical analysis</li>
+</ul>
+
+<p>=&gt; Large variety and high license cost</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>In-house developments</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="http://www.oecd.org/std/33869528.pdf">StatWorks</a>: SQL-based information system for the management of statistical production data</li>
+</ul>
+
+<p style="text-align:center"><img src="assets/img/statworks_diagram.jpg" alt="Statworks Diagram"/></p>
+
+<ul>
+<li>Implemented in 2004, maintained and enhanced by the IT department</li>
+<li>oriented at statistics, limited analytical functionality</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Infrastructure with Open Source Software</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Requirements</h3>
+
+<ul>
+<li>managed by staff with varying IT expertise</li>
+<li>interface with other languages and software</li>
+<li>front-end capacity</li>
+<li>flexible and intuitive chart libraries</li>
+<li>outputs for print and online publishing</li>
+</ul>
+
+<h3>Candidates</h3>
+
+<p style="text-align:left">
+<a href="http://www.r-project.org/"><img src="assets/img/r_logo.png" alt="R Logo" height="100px"/></a>
+<!-- <img src="assets/img/rpy2_logo.png" alt="rpy2 Logo" height="100px"/> -->
+<a href="https://www.python.org/"><img src="assets/img/python_logo.png" alt="Python Logo" height="100px"/></a>
+<a href="http://julialang.org/"><img src="assets/img/julia_logo.png" alt="Julia Logo" height="100px"/></a>
+<!-- <a href="http://www.ruby-lang.org/"><img src="assets/img/ruby_logo.png" alt="Ruby Logo" height="100px"/></a> -->
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Front-end: web browser integration</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Motivation</h3>
+
+<ul>
+<li>make usage as simple and intuitive as possible</li>
+<li>increase accessibility to developed procedures and back-ends</li>
+<li>ultimately consider public server hosting</li>
+</ul>
+
+<h3>Candidates</h3>
+
+<p style="text-align:left">
+<a href="http://shiny.rstudio.com/"><img src="assets/img/rshiny_logo.jpg" alt="R Shiny Logo" height="80px"/></a>
+<a href="https://www.djangoproject.com/"><img src="assets/img/django_logo.png" alt="Django Logo" height="80px"/></a>
+<a href="http://rubyonrails.org/"><img src="assets/img/rails_logo.png" alt="Rails Logo" height="80px"/></a>
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Back-end: source code sharing</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Motivation</h3>
+
+<ul>
+<li>benefit from OSS user community developments</li>
+<li>systematic user-driven enhancements</li>
+<li>co-operation and version control</li>
+<li>testing, transparency and issue tracking</li>
+<li>wiki documentation, jekyll project sites</li>
+</ul>
+
+<h3>Github</h3>
+
+<p style="text-align:center">
+<a href="https://help.github.com/set-up-git-redirect"><img src="assets/img/github_setup.png" alt="Github Setup" height="90px"/></a>
+<a href="https://help.github.com/create-a-repo"><img src="assets/img/github_repo.png" alt="Github Repo" height="90px"/></a>
+<a href="https://help.github.com/fork-a-repo"><img src="assets/img/github_fork.png" alt="Github Fork" height="90px"/></a>
+<a href="https://help.github.com/be-social"><img src="assets/img/github_collaborate.png" alt="Github Collaborate" height="90px"/></a>
+<a href="https://pages.github.com/"><img src="assets/img/github_jekyll.png" alt="Github Pages" height="90px"/></a>
+<a href="http://jekyllrb.com/"><img src="assets/img/jekyll_logo.png" alt="Jekyll Logo" height="90px"/></a>
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Reporting</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Requirements</h3>
+
+<ul>
+<li>efficient templating syntax</li>
+<li>markdown support</li>
+<li>flexible outputs with <a href="http://johnmacfarlane.net/pandoc/">Pandoc</a> universal document converter</li>
+</ul>
+
+<h3>R Implementations</h3>
+
+<p><a href="http://rapport-package.info/">rapport</a>: R templating system based on <a href="http://rapporter.github.io/pander/">pander</a></p>
+
+<p><a href="http://davidgohel.github.io/ReporteRs/index.html">ReporteRs</a>: generate Microsoft Word, Microsoft PowerPoint and HTML reports</p>
+
+<p style="text-align:left">
+<img src="assets/img/rapport_logo.png" alt="rapport Logo" height="100px"/>
+<img src="assets/img/ppt_logo.png" alt="Powerpoint Logo" height="100px"/>
+<img src="assets/img/word_logo.png" alt="Word Logo" height="100px"/>
+<img src="assets/img/html5_logo.png" alt="HTML5 Logo" height="100px"/>
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Visualisation</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>R</h3>
+
+<ul>
+<li><a href="http://ggplot2.org/">ggplot2</a>: R plotting system</li>
+<li><a href="http://christophergandrud.github.io/networkD3/">networkD3</a>: D3 network graphs with R htmlwidgets</li>
+<li><a href="http://rcharts.io/">rCharts</a>: R interface to JavaScript libraries</li>
+</ul>
+
+<h3>Python</h3>
+
+<ul>
+<li><a href="http://bokeh.pydata.org/">Bokeh</a>: Python interactive visualization library</li>
+<li><a href="https://github.com/mikedewar/d3py">d3py</a>: Python interface to build interactive, javascript based plots</li>
+<li><a href="http://matplotlib.org/">matplotlib</a>: Python 2D plotting library</li>
+</ul>
+
+<h3>Julia</h3>
+
+<ul>
+<li><a href="http://dcjones.github.io/Gadfly.jl/">Gadfly</a>: plotting and visualization system for Julia</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Online Publishing</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="http://www.terminalfour.com/">TERMINALFOUR</a>: current platform for website authoring</p>
+
+<ul>
+<li>websites must be tracked with their IDs</li>
+<li>media content items must be uploaded individually</li>
+<li>management of resources (js, css) requires admin intervention</li>
+</ul>
+
+<h3>Alternative: Static Blog Generation</h3>
+
+<ul>
+<li>file-based + database-free site generators (overview: <a href="http://www.modernstatic.com/">modernstatic</a>, <a href="https://www.staticgen.com/">staticgen</a>)</li>
+<li>e.g. jekyll + octopress (ruby), pelican (python)</li>
+</ul>
+
+<p style="text-align:left">
+<!-- <img src="assets/img/t4_logo.png" alt="T4 Logo" height="100px"/> -->
+<a href="http://jekyllrb.com/"><img src="assets/img/jekyll_logo.png" alt="Jekyll Logo" height="100px"/></a>
+<a href="http://octopress.org/"><img src="assets/img/octopress_logo.png" alt="Octopress Logo" height="100px"/></a>
+<a href="http://blog.getpelican.com/"><img src="assets/img/pelican_logo.png" alt="Pelican Logo" height="100px"/></a>
+</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Standards for OSS Usage</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>appropriate licensing</li>
+<li>categorize into users and contributors</li>
+<li>formalize style, documentation and testing requirements</li>
+<li>specialised training offers (plot creation, function documentation, packaging, testing etc.)</li>
+<li>exchange about best practicies with national statistics offices
+
+<ul>
+<li><a href="http://en.istat.it/">Italian National Institute of Statistics (ISTAT)</a>: Use of R in Business Surveys (<a href="http://www.amstat.org/meetings/ices/2012/papers/302193.pdf">pdf</a>)</li>
+<li><a href="http://www.cbs.nl/en-GB/menu/home/default.htm">Statistics Netherlands (CBS)</a>: The Introduction and Use of R Software (<a href="http://www.amstat.org/meetings/ices/2012/papers/302187.pdf">pdf</a>)</li>
+<li><a href="http://www.ons.gov.uk/">UK Office for National Statistics (ONS)</a> Use of R in the UK ONS (<a href="http://www.r-project.ro/workshop2014/papers/w2014_1.pdf">pdf</a>)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>SDMX Java library</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Java functions developed by Attilio Mattioc at Bank of Italy </p>
+
+<p style="text-align:left"><img src="assets/img/amattioc_sdmx_diagram.png" alt="A. Mattioc SDMX Diagram"/></p>
+
+<ul>
+<li>supported clients: ECB, Eurostat, IMF, ILO, OECD, INEGI (see list on <a href="https://github.com/amattioc/SDMX/tree/master/JAVA/test/it/bankitalia/reri/sia/sdmx/client">github</a>)</li>
+<li>R package with connector functions: <a href="https://github.com/amattioc/SDMX/wiki/RJSDMX:-Connector-for-R">RJSDMX</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Cloud Hosting</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>ICIO Foreign Demand Domestic Value Added</h3>
+
+<p>indicator calculation platform (shiny server + Azure): <a href="http://oecd-icio.cloudapp.net:3838/">http://oecd-icio.cloudapp.net:3838/</a></p>
+
+<ul>
+<li>select dimensions</li>
+<li>subset data from multidimensional arrays</li>
+<li>perform calculations:</li>
+</ul>
+
+<pre><code class="r">  data.couX.indX &lt;- data.conv1 * data.demand
+  aaa &lt;- xB %*% data.couX.indX
+  aaa &lt;- apply(aaa, 1, sum)
+</code></pre>
+
+<ul>
+<li>aggregate and display results (table, barchart, map)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>ICIO Foreign Demand Domestic: couD, couX, indX</h3>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center;"><img src="assets/img/runApp_industry_icioFddva_plots_dimensions_nafta.png" alt="industry app" style="height: 500px"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>ICIO Foreign Demand Domestic Value Added: calculation + aggregation</h3>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center;"><img src="assets/img/runApp_industry_icioFddva_aggregation.png" alt="industry app" style="height: 500px"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h3>ICIO Foreign Demand Domestic Value Added: aceEditor</h3>
+  </hgroup>
+  <article data-timings="">
+    <p style="text-align:center;"><img src="assets/img/runApp_industry_icioFddva_edit.png" alt="industry app" style="height: 550px"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>References</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>ProgrammableWeb link to <a href="http://www.programmableweb.com/api/oecd-open-data">OECD Open Data API</a></li>
+<li><a href="https://open-data.europa.eu/en/data/publisher/estat">European Union Open Data Portal</a></li>
+<li><a href="http://ropensci.org/">rOpenSci</a>: Transforming science through open data</li>
+</ul>
+
+<h3>Contact</h3>
+
+<p><a href="https://github.com/bowerth">https://github.com/bowerth</a><br>
+<a href="mailto:bo.werth@gmail.com">bo.werth@gmail.com</a><br>
+<a href="mailto:bo.werth@oecd.org">bo.werth@oecd.org</a><br>
+OECD Directorate for Science, Technology and Innovation<br>
+2, rue André Pascal<br>
+75775 Paris Cedex 16</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Disclaimer'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='About OECD'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The six principals of open science'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Rogoff and Reinhart: Growth in a Time of Debt'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Herndon, Ash, and Pollin'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Peer-review: Mail Avengers'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Mail Avengers: Figure 1'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Mail Avengers: Figure 2'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='OECD Data Portal'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='OECD Open Data'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Publication Workflow'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Licensed A/S Software'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='In-house developments'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Infrastructure with Open Source Software'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Front-end: web browser integration'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Back-end: source code sharing'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Reporting'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Visualisation'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Online Publishing'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Standards for OSS Usage'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='SDMX Java library'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Cloud Hosting'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='ICIO Foreign Demand Domestic: couD, couX, indX'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='ICIO Foreign Demand Domestic Value Added: calculation + aggregation'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='ICIO Foreign Demand Domestic Value Added: aceEditor'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='References'>
+         26
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
