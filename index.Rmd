@@ -287,13 +287,14 @@ Publishing and communications
 ### Alternative: Static Blog Generation
 
 - file-based + database-free site generators (overview: [modernstatic](http://www.modernstatic.com/), [staticgen](https://www.staticgen.com/))
-- e.g. jekyll + octopress (ruby), pelican (python)
+- e.g. jekyll + octopress (ruby), pelican (python), hugo
 
 <p style="text-align:left">
 <!-- <img src="assets/img/t4_logo.png" alt="T4 Logo" height="100px"/> -->
 <a href="http://jekyllrb.com/"><img src="assets/img/jekyll_logo.png" alt="Jekyll Logo" height="100px"/></a>
 <a href="http://octopress.org/"><img src="assets/img/octopress_logo.png" alt="Octopress Logo" height="100px"/></a>
 <a href="http://blog.getpelican.com/"><img src="assets/img/pelican_logo.png" alt="Pelican Logo" height="100px"/></a>
+<a href="http://gohugo.io/"><img src="assets/img/hugo_logo.png" alt="Hugo Logo" height="100px"/></a>
 </p>
 
 --- .class #id
